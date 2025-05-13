@@ -1,4 +1,5 @@
 .DS_Store
 venv
 top_youtube_reviews.csv
+transcripts
 .env

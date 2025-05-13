@@ -9,6 +9,8 @@ import isodate  # To parse ISO 8601 durations
 load_dotenv()
 api_key = os.getenv("yt_api_key")
 
+MAX_RESULTS = 150
+
 # Initialize YouTube API client
 youtube = build('youtube', 'v3', developerKey=api_key)
 
@@ -17,9 +19,10 @@ def get_top_reviews(phone_name):
     search_response = youtube.search().list(
         q=f"{phone_name} review",
         part="snippet",
-        maxResults=15,  # slightly more to allow for filtering
+        maxResults=MAX_RESULTS,  # slightly more to allow for filtering
         order="viewCount",
-        type="video"
+        type="video",
+        relevanceLanguage="en"
     ).execute()
 
     video_ids = [item["id"]["videoId"] for item in search_response["items"]]
@@ -38,21 +41,17 @@ def get_top_reviews(phone_name):
     return [f"https://www.youtube.com/watch?v={vid}" for vid in long_video_ids]
 
 # List of phone names
-#phones = [
-#    "iPhone 16 Pro Max",
-#    "Samsung Galaxy S25 Ultra",
-#    "Google Pixel 9 Pro",
-#    "OnePlus 12",
-#    "Google Pixel 9 Pro Fold",
-#    "Samsung Galaxy S24 Ultra",
-#    "Apple iPhone 16",
-#    "Moto Edge 2024",
-#    "Samsung Galaxy S25",
-#    "Nothing Phone 3a Pro"
-#]
 phones = [
-    "iPhone 16 Pro Max",
-    "Samsung Galaxy S25 Ultra"
+    "'iPhone 16 Pro Max'",
+    "'Samsung Galaxy S25 Ultra'",
+    "'Google Pixel 9 Pro'",
+    "'OnePlus 12'",
+    "'Google Pixel 9 Pro Fold'",
+    "'Samsung Galaxy S24 Ultra'",
+    "'Apple iPhone 16'",
+    "'Moto Edge 2024'",
+    "'Samsung Galaxy S25'",
+    "'Nothing Phone 3a Pro'"
 ]
 
 # Create and write to a CSV file
