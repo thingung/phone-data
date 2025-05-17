@@ -2,4 +2,5 @@
 venv
 top_youtube_reviews.csv
 transcripts
+sentiment_results   
 .env
