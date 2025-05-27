@@ -45,11 +45,16 @@ Analyze the following transcript and return a JSON object including these keys:
   }}
 
 - advertisement: {{
-    is_ad: "Yes"|"No",
+    any_advertisement: "Yes"|"No",
+    phone_advertisement: "Yes"|"No",
     explanation: string
   }}
 
-IMPORTANT: When determining if the video is an advertisement, specifically check if the transcript contains explicit statements that the video is sponsored or paid to review or promote the phone being discussed. Ignore any mentions of sponsorships by other companies or general positive language about the phone. Only consider it an advertisement if it clearly states or implies sponsorship or paid promotion for that specific phone.
+IMPORTANT:
+- For `any_advertisement`, check if the transcript includes **any kind of promotion or sponsorship**, including third-party sponsors (e.g., VPNs, tech brands, etc.).
+- For `phone_advertisement`, only return "Yes" if the transcript **explicitly states or clearly implies** that the video is **sponsored or paid to review or promote the phone being discussed**.
+  - Ignore general positivity or endorsement if there is no direct indication of sponsorship or paid promotion of the phone.
+  - If the video says it’s sponsored by another company (not the phone brand), then set `phone_advertisement` to "No".
 
 Return only valid JSON in your response, no additional text.
 
@@ -58,6 +63,7 @@ Transcript:
 {text}
 \"\"\"
 """
+
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",

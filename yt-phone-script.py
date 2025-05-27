@@ -9,7 +9,7 @@ import isodate  # To parse ISO 8601 durations
 load_dotenv()
 api_key = os.getenv("yt_api_key")
 
-MAX_RESULTS = 150
+MAX_RESULTS = 350
 
 # Initialize YouTube API client
 youtube = build('youtube', 'v3', developerKey=api_key)
@@ -64,4 +64,3 @@ with open("top_youtube_reviews.csv", mode="w", newline='', encoding="utf-8") as 
         urls = get_top_reviews(phone)
         for url in urls:
             writer.writerow([phone, url])
-
